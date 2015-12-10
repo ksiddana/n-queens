@@ -123,13 +123,15 @@
       
       // colIndex is expected to be array of Columns Values
       var conflicts = 0;
+      var matrix = this.attributes;
 
-      for (var i = 0; i < colIndex.length; i++){
-        if(colIndex[i] === 1){
+      for (var i = 0; i < matrix.n; i++){
+        
+        if (matrix[i][colIndex] === 1){
           conflicts++;
         }
       }
-        //console.log("rowIndex", rowIndex, " conflicts", conflicts);
+
       if (conflicts > 1) {
           return true;
       } else {
@@ -140,29 +142,14 @@
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      console.log(this);
-      //var currentBoard = this.attributes;
-      var hasColConflict = false;
-      // for an nxn size board, the number of rows always equals num of columns
-      for (var j = 0; j < this.attributes[0].length; j++){
-          var columnsArray = [];
-          for (var row in this.attributes){
+      var matrix = this.attributes;
 
-            if (Array.isArray(this.attributes[row])) {
-              columnsArray.push(this.attributes[row][j]); 
-
-            }
-          }
-
-          console.log(columnsArray);
-
-          if (this.hasColConflictAt(columnsArray)) {
-            hasColConflict = true;
-            return hasColConflict;
-          } 
+      for (var i = 0; i < matrix.n; i++){
+        if (this.hasColConflictAt(i)){
+          return true;
+        }
       }
-
-      return hasColConflict;
+      return false;
     },
 
     
@@ -174,12 +161,43 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+       var conflicts = 0;
+       var matrix = this.attributes;
+       //var i = majorDiagonalColumnIndexAtFirstRow;
+
+      for (var i = majorDiagonalColumnIndexAtFirstRow; i < matrix.n; i++) {
+
+        for (var j = i+1; j < i+1; j++) {
+            
+            if (matrix[i][j] === 1) {
+              conflicts++;
+            }
+            console.log(matrix[i][j], " i:" , i, " j: ",j);
+        }
+      }
+        //console.log(matrix[i][j]);
+      
+
+      if (conflicts > 1) {
+        return true
+      }
+
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      
+      var matrix = this.attributes;  
+
+      for (var i = 0; i < matrix.n; i++) {
+        if (this.hasMajorDiagonalConflictAt(i)){
+          return true;
+        }
+      }
+
+      return false;
+
     },
 
 
