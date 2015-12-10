@@ -79,12 +79,38 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      //console.log("-------------------", this.get(rowIndex)[0]);
+      //debugger;
+      var conflicts = 0;
+
+      for (var i = 0; i < rowIndex.length; i++){
+        if(rowIndex[i] === 1){
+          conflicts++;
+        }
+      }
+        //console.log("rowIndex", rowIndex, " conflicts", conflicts);
+      if (conflicts > 1) {
+          return true;
+      } else {
+          return false; // fixme
+      }
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      // console.log("Calling this function");
+      //console.log("\n\nthis", this.attributes[0]);
+      var hasRowConflict = false;
+      for (var row in this.attributes){
+        // this.hasRowConflictAt(this.attributes[i]);
+        // console.log(this.attributes[key]);
+        if (this.hasRowConflictAt(this.attributes[row])) {
+
+          hasRowConflict = true;
+        }
+      }
+        return hasRowConflict;
+      // return false; // fixme
     },
 
 
@@ -94,13 +120,52 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      
+      // colIndex is expected to be array of Columns Values
+      var conflicts = 0;
+
+      for (var i = 0; i < colIndex.length; i++){
+        if(colIndex[i] === 1){
+          conflicts++;
+        }
+      }
+        //console.log("rowIndex", rowIndex, " conflicts", conflicts);
+      if (conflicts > 1) {
+          return true;
+      } else {
+          return false; // fixme
+      }
+
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      console.log(this);
+      //var currentBoard = this.attributes;
+      var hasColConflict = false;
+      // for an nxn size board, the number of rows always equals num of columns
+      for (var j = 0; j < this.attributes[0].length; j++){
+          var columnsArray = [];
+          for (var row in this.attributes){
+
+            if (Array.isArray(this.attributes[row])) {
+              columnsArray.push(this.attributes[row][j]); 
+
+            }
+          }
+
+          console.log(columnsArray);
+
+          if (this.hasColConflictAt(columnsArray)) {
+            hasColConflict = true;
+            return hasColConflict;
+          } 
+      }
+
+      return hasColConflict;
     },
+
+    
 
 
 
