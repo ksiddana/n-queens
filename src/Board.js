@@ -183,6 +183,8 @@
         
           colIndex++;
       }
+
+
         //console.log(matrix[row][column]);
       
         // Hard Major
@@ -220,12 +222,56 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+       var conflicts = 0;
+       var matrix = this.attributes;
+       var colIndex = minorDiagonalColumnIndexAtFirstRow;
+       // var i = majorDiagonalColumnIndexAtFirstRow;
+       this.printTheBoard();
+
+       // debugger;
+      for (var row = 0; row < matrix.n; row++) {
+        
+        // if(colIndex <= 0 ){
+          for (var column = colIndex; ((column >= colIndex-1)); column--) {
+          // debugger;
+                      
+            if (matrix[row][column] === 1) {
+              conflicts++;
+            }
+            console.log(matrix[row][column], " row:" , row, " column: ",column);
+          }
+        
+          colIndex--;
+      }
+
+      
+        //console.log(matrix[row][column]);
+      
+        // Hard Major
+        // Iterate through the bottom left area of the board
+        // Here Row is less than the Column 
+        // We need to decrease Column by colIndex by 1
+
+
+      if (conflicts > 1) {
+        return true
+      }
+
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      
+      var matrix = this.attributes;  
+
+      for (var column = (2*matrix.n-1); column >= 0; column--) {
+        if (this.hasMinorDiagonalConflictAt(column)){
+          return true;
+        }
+      }
+
+      return false;
     },
 
     printTheBoard: function(){
