@@ -68,16 +68,21 @@ describe("Board", function() {
       [0, 0, 0, 0]
     ]);
   });
-  
+
+  console.log("============START--------------");
   describe("Board with easy major diagonal conflict", function() {
     verifyConflictTypes(['majorDiagonal', 'queens'], [
-      [1, 2, 3, 4],
-      [5, 6, 7, 8],
-      [9, 10, 11, 12],
-      [13, 14, 15, 16]
+      [0, 1, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 1],
+      [0, 0, 0, 0]
     ]);
   });
 
+  console.log("-------------STOP---------------");
+  
+
+console.log("============START--------------");
   describe("Board with hard major diagonal conflict", function() {
     verifyConflictTypes(['majorDiagonal', 'queens'], [
       [0, 0, 0, 0],
@@ -86,7 +91,8 @@ describe("Board", function() {
       [0, 1, 0, 0]
     ]);
   });
-  
+  console.log("-------------STOP---------------");
+
   describe("Board with easy minor diagonal conflict", function() {
     verifyConflictTypes(['minorDiagonal', 'queens'], [
       [0, 0, 1, 0],

@@ -8,9 +8,9 @@
 
     initialize: function (params) {
       if (_.isUndefined(params) || _.isNull(params)) {
-        console.log('Good guess! But to use the Board() constructor, you must pass it an argument in one of the following formats:');
-        console.log('\t1. An object. To create an empty board of size n:\n\t\t{n: %c<num>%c} - Where %c<num> %cis the dimension of the (empty) board you wish to instantiate\n\t\t%cEXAMPLE: var board = new Board({n:5})', 'color: blue;', 'color: black;','color: blue;', 'color: black;', 'color: grey;');
-        console.log('\t2. An array of arrays (a matrix). To create a populated board of size n:\n\t\t[ [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...] ] - Where each %c<val>%c is whatever value you want at that location on the board\n\t\t%cEXAMPLE: var board = new Board([[1,0,0],[0,1,0],[0,0,1]])', 'color: blue;', 'color: black;','color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: grey;');
+        //console.log('Good guess! But to use the Board() constructor, you must pass it an argument in one of the following formats:');
+        // console.log('\t1. An object. To create an empty board of size n:\n\t\t{n: %c<num>%c} - Where %c<num> %cis the dimension of the (empty) board you wish to instantiate\n\t\t%cEXAMPLE: var board = new Board({n:5})', 'color: blue;', 'color: black;','color: blue;', 'color: black;', 'color: grey;');
+        // console.log('\t2. An array of arrays (a matrix). To create a populated board of size n:\n\t\t[ [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...], [%c<val>%c,%c<val>%c,%c<val>%c...] ] - Where each %c<val>%c is whatever value you want at that location on the board\n\t\t%cEXAMPLE: var board = new Board([[1,0,0],[0,1,0],[0,0,1]])', 'color: blue;', 'color: black;','color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: blue;', 'color: black;', 'color: grey;');
       } else if (params.hasOwnProperty('n')) {
         this.set(makeEmptyMatrix(this.get('n')));
       } else {
@@ -120,7 +120,8 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      
+      this.printTheBoard();
+      // debugger;
       // colIndex is expected to be array of Columns Values
       var conflicts = 0;
       var matrix = this.attributes;
@@ -163,20 +164,32 @@
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
        var conflicts = 0;
        var matrix = this.attributes;
-       //var i = majorDiagonalColumnIndexAtFirstRow;
+       var colIndex = majorDiagonalColumnIndexAtFirstRow;
+       // var i = majorDiagonalColumnIndexAtFirstRow;
+       this.printTheBoard();
 
-      for (var i = majorDiagonalColumnIndexAtFirstRow; i < matrix.n; i++) {
-
-        for (var j = i+1; j < i+1; j++) {
-            
-            if (matrix[i][j] === 1) {
+       // debugger;
+      for (var row = 0; row < matrix.n; row++) {
+        
+        // if(colIndex <= 0 ){
+          
+          for (var column = colIndex; ((column <= colIndex+1) && (column < matrix.n)); column++) {
+                      
+            if (matrix[row][column] === 1) {
               conflicts++;
             }
-            console.log(matrix[i][j], " i:" , i, " j: ",j);
-        }
+            console.log(matrix[row][column], " row:" , row, " column: ",column);
+          }
+        
+          colIndex++;
       }
-        //console.log(matrix[i][j]);
+        //console.log(matrix[row][column]);
       
+        // Hard Major
+        // Iterate through the bottom left area of the board
+        // Here Row is less than the Column 
+        // We need to decrease Column by colIndex by 1
+
 
       if (conflicts > 1) {
         return true
@@ -190,8 +203,8 @@
       
       var matrix = this.attributes;  
 
-      for (var i = 0; i < matrix.n; i++) {
-        if (this.hasMajorDiagonalConflictAt(i)){
+      for (var column = -matrix.n; column < matrix.n; column++) {
+        if (this.hasMajorDiagonalConflictAt(column)){
           return true;
         }
       }
@@ -213,8 +226,17 @@
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
       return false; // fixme
-    }
+    },
 
+    printTheBoard: function(){
+      console.log("\n-----------------------------");
+      for (var i = 0; i < this.attributes.n; i++) {
+
+        console.log(this.attributes[i]);  
+      };
+      console.log("\n-----------------------------");
+
+    }
     /*--------------------  End of Helper Functions  ---------------------*/
 
 
