@@ -168,20 +168,15 @@
        // var i = majorDiagonalColumnIndexAtFirstRow;
        this.printTheBoard();
 
-       // debugger;
+       // debugger;`
       for (var row = 0; row < matrix.n; row++) {
         
         // if(colIndex <= 0 ){
-          
-          for (var column = colIndex; ((column <= colIndex+1) && (column < matrix.n)); column++) {
-                      
-            if (matrix[row][column] === 1) {
+            if (matrix[row][row + colIndex] === 1) {
               conflicts++;
-            }
-            console.log(matrix[row][column], " row:" , row, " column: ",column);
-          }
-        
-          colIndex++;
+            }       
+            console.log(matrix[row][row + colIndex], " row:" , row, " column: ", row + colIndex);
+          
       }
 
 
